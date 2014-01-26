@@ -5,6 +5,8 @@ to external APIs.  PHP doesn't really support concurrency
 but has a libevent addon.  Using nonblocking sockets and libevent, 
 PHPConcurrency gives you a way of using "futures" and for comprehensions.
 
+Grab the libevent addon here - http://pecl.php.net/package/libevent
+
 SAMPLE:
 ```php
 $future = PHPConcurrency\Request\HTTP::get("www.yahoo.com");

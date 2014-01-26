@@ -32,8 +32,10 @@ SAMPLE:
 ```php
 $future = PHPConcurrency\Request\HTTP::get("www.yahoo.com"); 
 $future->getAsync(5); 
+// dont block here
 $banana = 1 + 2 + 3; 
 $html = $future->value(); 
+//block here
 ```
 
 For comprehensions make it easy to create dependencies without 

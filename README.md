@@ -22,11 +22,11 @@ $htmls = $future->get(5);
 $htmls here is an array of values.  If you actually want to do nonblocking
 single calls, use the getAsync and value functions
 
-SAMPLE:
-$future = PHPConcurrency\Request\HTTP::get("www.yahoo.com");
-$future->getAsync(5);
-$banana = 1 + 2 + 3;
-$html = $future->value();
+SAMPLE: 
+$future = PHPConcurrency\Request\HTTP::get("www.yahoo.com"); 
+$future->getAsync(5); 
+$banana = 1 + 2 + 3; 
+$html = $future->value(); 
 
 For comprehensions make it easy to create dependencies without 
 a lot of ugly code.  Since this is not built into the core, some
@@ -34,17 +34,17 @@ things are a little hacky.  You pass in virtual variable names to
 assign the results of a future.  Then you can yield a specific variable.
 Kind of functional ...
 
-SAMPLE:
-function futureSubstring() {
-	return new PHPConcurrency\Concurrency\Future\Successful(function($string) {
-		return substr($string, 0, 20);
-	}, func_get_args());
-}
-echo \PHPConcurrency\ForComprehension::build(
-	$line('$html', $get, array('www.google.com')),
-	$line('$header', 'futureSubstring', array('$html'))
-	)->yields('$header')->get(30);
-
+SAMPLE: 
+function futureSubstring() { 
+	return new PHPConcurrency\Concurrency\Future\Successful(function($string) { 
+		return substr($string, 0, 20); 
+	}, func_get_args()); 
+} 
+echo \PHPConcurrency\ForComprehension::build( 
+	$line('$html', $get, array('www.google.com')), 
+	$line('$header', 'futureSubstring', array('$html')) 
+	)->yields('$header')->get(30); 
+ 
 The for comprehension sees the dependency between the substring call
 and the web request future and does the calls in the correct
 order.  $line, $get, and $post are simple aliases to functions that

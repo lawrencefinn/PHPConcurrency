@@ -33,6 +33,7 @@ class ForComprehension{
 
 	function get($timeout) {
 		$returnVal = null;
+		$tempValues = array();
 		foreach ($this->order as $calls) {
 			$futures = array();
 			foreach ($calls as $call) {
@@ -40,7 +41,8 @@ class ForComprehension{
 				$variableName = $line->variableName;
 				foreach ($line->inputs as &$input) {
 					if (is_string($input) and $input[0] == '$') {
-						$input = $$input;
+						//$input = $$input;
+						$input = $tempValues[$input];
 					}
 				}
 				$futures[] = call_user_func_array($line->function,
@@ -52,13 +54,16 @@ class ForComprehension{
 			foreach ($calls as $call) {
 				$line = $this->lines[$call];
 				$variableName = $line->variableName;
-				$$variableName = array_shift($futureval);
-				$returnVal = $$variableName;
+				//$$variableName = array_shift($futureval);
+				//$returnVal = $$variableName;
+				$tempValues[$variableName] = array_shift($futureval);
+				$returnVal = $tempValues[$variableName];
 			}
 		}
 		if (isset($this->yieldsVariable)) {
 			$var = $this->yieldsVariable;
-			return $$var;
+			//return $$var;
+			return $tempValues[$var];
 		}
 		return $returnVal;
 	}
@@ -94,6 +99,7 @@ class ForComprehension{
 		$variablesDefined = array();
 		$variablesUsed = array();
 		$lineVariables = array();
+		$tempValues = array();
 		foreach ($lines as $index => $line) {
 			$variableName = $line->variableName;
 			if (!isset($variablesDefined[$variableName])) {
@@ -120,7 +126,8 @@ class ForComprehension{
 				$variableName = $line->variableName;
 				foreach ($line->inputs as &$input) {
 					if (is_string($input) and $input[0] == '$') {
-						$input = $$input;
+						//$input = $$input;
+						$input = $tempValues[$input];
 					}
 				}
 				$futures[] = call_user_func_array($line->function,
@@ -132,8 +139,10 @@ class ForComprehension{
 			foreach ($calls as $call) {
 				$line = $lines[$call];
 				$variableName = $line->variableName;
-				$$variableName = array_shift($futureval);
-				$returnVal = $$variableName;
+				//$$variableName = array_shift($futureval);
+				//$returnVal = $$variableName;
+				$tempValues[$variableName] = array_shift($futureval);
+				$returnVal = $tempValues[$variableName];
 			}
 		}
 		return $returnVal;

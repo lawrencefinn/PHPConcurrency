@@ -23,6 +23,10 @@ class Future {
 		event_buffer_enable($buffer, EV_READ | EV_PERSIST);
 	}
 
+	function onComplete($resultFunction) {
+		$this->resultFunction = $resultFunction;
+	}
+
 	function parallel($futures) {
 		foreach ($futures as $fut) {
 			$fut->base = $this->base;
